@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Time</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      background: white;
+    }
+    h1 {
+      margin-top: 30px;
+      font-size: 36px;
+    }
+    .question-box {
+      background: #FFD966;
+      display: inline-block;
+      padding: 15px 30px;
+      margin: 20px 0;
+      font-size: 28px;
+      font-weight: bold;
+      color: white;
+      text-shadow: 2px 2px 0 black;
+    }
+    .image-button {
+      width: 120px;
+      height: 120px;
+      margin: 30px 20px;
+      border-radius: 20px;
+      background-size: cover;
+      background-position: center;
+      display: inline-block;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Quiz Time</h1>
+  <div class="question-box" id="question">Siapakah Mantan Member NCT yang sangat di sukai?</div>
+
+  <div>
+    <div id="leftBtn" class="image-button"></div>
+    <div id="rightBtn" class="image-button"></div>
+  </div>
+
+  <script>
+    let currentQuestion = 0;
+
+    const questions = [
+      {
+        text: "Siapakah Mantan Member NCT yang sangat di sukai?",
+        left: 2,
+        right: 1,
+        leftImg: "kiri.jpg",
+        rightImg: "kanan.jpg"
+      },
+      {
+        text: "siapakah grup K-Pop yang di sukai!",
+        left: null,
+        right: null,
+        leftImg: "kiri2.jpg",
+        rightImg: "kanan2.jpg"
+      },
+      {
+        text: "siapakah kucing yang bernama Cindut dan Ciring!?",
+        left: "isi.html",
+        right: null,
+        leftImg: "kiri3.jpg",
+        rightImg: "kanan3.jpg"
+      }
+    ];
+
+    const questionBox = document.getElementById("question");
+    const leftBtn = document.getElementById("leftBtn");
+    const rightBtn = document.getElementById("rightBtn");
+
+    function showQuestion(index) {
+      if (typeof index === 'number' && questions[index]) {
+        currentQuestion = index;
+        const q = questions[index];
+        questionBox.textContent = q.text;
+        leftBtn.style.backgroundImage = `url('${q.leftImg}')`;
+        rightBtn.style.backgroundImage = `url('${q.rightImg}')`;
+      }
+    }
+
+    leftBtn.onclick = () => {
+      const next = questions[currentQuestion].left;
+      if (typeof next === "number") {
+        showQuestion(next);
+      } else if (typeof next === "string") {
+        window.location.href = next;
+      }
+    };
+
+    rightBtn.onclick = () => {
+      const next = questions[currentQuestion].right;
+      if (typeof next === "number") {
+        showQuestion(next);
+      } else if (typeof next === "string") {
+        window.location.href = next;
+      }
+    };
+
+    // Tampilkan soal pertama
+    showQuestion(currentQuestion);
+  </script>
+</body>
+</html>
