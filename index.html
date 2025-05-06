@@ -36,6 +36,11 @@
     .option:hover {
       transform: scale(1.05);
     }
+
+    #feedback {
+      margin-top: 20px;
+      color: orange;
+    }
   </style>
 </head>
 <body>
@@ -44,6 +49,7 @@
     <div class="option" id="leftOption" onclick="choose('left')"></div>
     <div class="option" id="rightOption" onclick="choose('right')"></div>
   </div>
+  <p id="feedback"></p>
 
   <script>
     const questions = [
@@ -51,22 +57,22 @@
         text: "Siapakah Mantan Member NCT yang sangat di sukai?",
         leftImage: "kiri.jpeg",
         rightImage: "kanan.jpeg",
-        leftNext: 2,
-        rightNext: 1
+        correct: "right",
+        next: 1
       },
       {
         text: "Siapakah grup K-Pop yang di sukai!",
         leftImage: "kiri2.jpeg",
         rightImage: "kanan2.jpeg",
-        leftNext: 2,
-        rightNext: 0 // atau next ke soal awal, bisa juga ke soal baru
+        correct: "left",
+        next: 2
       },
       {
         text: "Siapakah kucing yang bernama Cindut dan Ciring!?",
         leftImage: "kiri3.jpg",
         rightImage: "kanan3.jpg",
-        leftNext: "isi.html",
-        rightNext: null
+        correct: "left",
+        next: "isi.html"
       }
     ];
 
@@ -77,19 +83,20 @@
       document.getElementById("question").textContent = q.text;
       document.getElementById("leftOption").style.backgroundImage = `url(${q.leftImage})`;
       document.getElementById("rightOption").style.backgroundImage = `url(${q.rightImage})`;
+      document.getElementById("feedback").textContent = "";
       currentQuestion = index;
     }
 
     function choose(side) {
       const q = questions[currentQuestion];
-      const next = side === "left" ? q.leftNext : q.rightNext;
-
-      if (typeof next === "number") {
-        loadQuestion(next);
-      } else if (typeof next === "string") {
-        window.location.href = next;
+      if (side === q.correct) {
+        if (typeof q.next === "number") {
+          loadQuestion(q.next);
+        } else if (typeof q.next === "string") {
+          window.location.href = q.next;
+        }
       } else {
-        alert("Jawaban selesai atau salah arah.");
+        document.getElementById("feedback").textContent = "Jawaban salah! Coba lagi ya.";
       }
     }
 
